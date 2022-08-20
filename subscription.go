@@ -82,7 +82,7 @@ func (sr *SubscriptionRequest) ListAll(customerID string) (*Subscription, *Error
 	clientRequest := &ClientRequest{
 		Path:   "subscriptions",
 		Result: &SubscriptionResult{},
-		Body:   subscriptionInput,
+		QueryParams: subscriptionInput
 	}
 
 	result, err := sr.client.Get(clientRequest)
