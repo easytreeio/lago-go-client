@@ -74,6 +74,27 @@ func (sr *SubscriptionRequest) Create(subscriptionInput *SubscriptionInput) (*Su
 	return subscriptionResult.Subscription, nil
 }
 
+func (sr *SubscriptionRequest) ListAll(customerID string) (*Subscription, *Error) {
+	subscriptionInput := &SubscriptionInput{
+		CustomerID: customerID,
+	}
+
+	clientRequest := &ClientRequest{
+		Path:   "subscriptions",
+		Result: &SubscriptionResult{},
+		Body:   subscriptionInput,
+	}
+
+	result, err := sr.client.Get(clientRequest)
+	if err != nil {
+		return nil, err
+	}
+
+	subscriptionResult := result.(*SubscriptionResult)
+
+	return subscriptionResult.Subscription, nil
+}
+
 func (sr *SubscriptionRequest) Terminate(customerID string) (*Subscription, *Error) {
 	subscriptionInput := &SubscriptionInput{
 		CustomerID: customerID,
